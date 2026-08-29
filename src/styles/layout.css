@@ -1,0 +1,152 @@
+@layer layout {
+  /* ---- shell ----------------------------------------------------------- */
+
+  .shell {
+    position: relative;
+    z-index: 10;
+    padding-left: var(--rail);
+  }
+
+  .canvas-layer {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+  }
+  .canvas-layer canvas {
+    width: 100%;
+    height: 100%;
+  }
+  /* the coloured light in the scene is CSS, not WebGL — cheaper, and it still
+     reads on machines that never get the canvas */
+  .nebula {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(52vw 46vw at 78% 26%, rgb(52 74 168 / 0.24), transparent 62%),
+      radial-gradient(40vw 40vw at 22% 78%, rgb(88 62 140 / 0.16), transparent 66%),
+      radial-gradient(30vw 26vw at 62% 96%, rgb(160 108 52 / 0.09), transparent 70%);
+    filter: blur(20px);
+  }
+
+  /* ---- top bar --------------------------------------------------------- */
+
+  .topbar {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 70;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s-4);
+    height: var(--rail);
+    padding-inline: calc(var(--rail) * 0.34) var(--gutter);
+    mix-blend-mode: normal;
+  }
+  .topbar::after {
+    content: '';
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 1px;
+    background: linear-gradient(to right, var(--haze), transparent 70%);
+  }
+  .mark {
+    display: flex;
+    align-items: baseline;
+    gap: 0.55ch;
+    font-family: var(--f-display);
+    font-variation-settings: 'wdth' 115, 'wght' 700;
+    font-size: 0.9375rem;
+    letter-spacing: 0.02em;
+    color: var(--bone);
+  }
+  .mark i {
+    width: 4px;
+    height: 4px;
+    background: var(--xenon);
+    border-radius: 50%;
+    font-style: normal;
+    translate: 0 -1px;
+  }
+  .topbar-right {
+    display: flex;
+    align-items: center;
+    gap: var(--s-4);
+  }
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6ch;
+  }
+  .status b {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #64e2a0;
+    box-shadow: 0 0 0 3px rgb(100 226 160 / 0.16);
+    animation: pulse 2.8s var(--e-soft) infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 2px rgb(100 226 160 / 0.1) }
+    50% { box-shadow: 0 0 0 5px rgb(100 226 160 / 0.02) }
+  }
+
+  /* ---- section frame --------------------------------------------------- */
+
+  .sect {
+    position: relative;
+    padding-inline: var(--gutter);
+    padding-block: var(--section-y);
+  }
+  .sect-head {
+    display: flex;
+    align-items: baseline;
+    gap: var(--s-4);
+    margin-bottom: var(--s-7);
+    border-top: var(--hair);
+    padding-top: var(--s-4);
+  }
+  .sect-head h2 {
+    font-family: var(--f-display);
+    font-variation-settings: 'wdth' 112, 'wght' 650;
+    font-size: var(--t-h2);
+    line-height: 0.9;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+  }
+  .sect-head .label {
+    margin-left: auto;
+    text-align: right;
+    max-width: 34ch;
+    letter-spacing: 0.06em;
+  }
+
+  /* 12-column working grid */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--gutter);
+  }
+
+  @media (max-width: 860px) {
+    .shell {
+      padding-left: 0;
+      padding-bottom: 4.5rem;
+    }
+    .topbar {
+      height: 3.25rem;
+      padding-inline: var(--gutter);
+    }
+    .sect-head {
+      flex-direction: column;
+      gap: var(--s-2);
+    }
+    .sect-head .label {
+      margin-left: 0;
+      text-align: left;
+    }
+    .grid {
+      gap: var(--s-5);
+    }
+  }
+}

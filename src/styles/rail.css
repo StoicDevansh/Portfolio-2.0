@@ -1,0 +1,162 @@
+@layer components {
+  /* ==========================================================================
+     Rail — the site index. Dots mark destinations, the line carries live scroll
+     position, and the readout at the foot is the actual percentage. Orientation
+     first: you always know where you are and what is left.
+     ========================================================================== */
+
+  .rail {
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: 70;
+    width: var(--rail);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+  }
+  .rail::before {
+    content: '';
+    position: absolute;
+    left: 30%;
+    top: var(--s-9);
+    bottom: var(--s-9);
+    width: 1px;
+    background: var(--haze);
+  }
+  .rail-fill {
+    position: absolute;
+    left: 30%;
+    top: var(--s-9);
+    height: calc(100% - var(--s-9) * 2);
+    width: 1px;
+    background: linear-gradient(to bottom, var(--xenon-a24), var(--xenon));
+    transform-origin: top center;
+    scale: 1 var(--progress, 0);
+  }
+  .rail::after {
+    content: '';
+    position: absolute;
+    inset: 0 0 0 auto;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, var(--haze) 22%, var(--haze) 78%, transparent);
+  }
+
+  .rail-nav {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1.15rem, 3.1vh, 2rem);
+  }
+
+  .rail-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding-left: calc(30% - 3.5px);
+    color: var(--faint);
+    transition: color var(--d-2) var(--e-soft);
+  }
+  .rail-item span:first-child {
+    flex: 0 0 7px;
+    width: 7px;
+    height: 7px;
+    border: 1px solid currentColor;
+    border-radius: 50%;
+    background: var(--void);
+    transition: background var(--d-2) var(--e-soft), scale var(--d-2) var(--e-out);
+  }
+  .rail-item span:last-child {
+    font-family: var(--f-mono);
+    --wdth: 76;
+    --wght: 500;
+    font-variation-settings: 'wdth' var(--wdth), 'wght' var(--wght);
+    font-size: 0.625rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition: --wdth var(--d-2) var(--e-out), color var(--d-2) var(--e-soft);
+  }
+  .rail-item:hover,
+  .rail-item:focus-visible {
+    color: var(--muted);
+  }
+  .rail-item:hover span:last-child {
+    --wdth: 88;
+  }
+  .rail-item[aria-current='true'] {
+    color: var(--xenon);
+  }
+  .rail-item[aria-current='true'] span:first-child {
+    background: var(--xenon);
+    scale: 1.15;
+    box-shadow: 0 0 0 4px var(--xenon-a12);
+  }
+  .rail-item[aria-current='true'] span:last-child {
+    color: var(--bone);
+    --wdth: 92;
+    --wght: 600;
+  }
+
+  .rail-foot {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: var(--s-5);
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+  }
+  .rail-foot::before {
+    counter-reset: pct var(--pct, 0);
+    content: counter(pct) '%';
+  }
+
+  /* ---- mobile: the rail becomes a bottom bar --------------------------- */
+  @media (max-width: 860px) {
+    .rail {
+      inset: auto 0 0 0;
+      width: auto;
+      height: auto;
+      flex-direction: row;
+      padding: 0.5rem var(--gutter) calc(0.5rem + env(safe-area-inset-bottom));
+      background: rgb(7 10 18 / 0.82);
+      backdrop-filter: blur(14px) saturate(1.1);
+      border-top: var(--hair);
+    }
+    .rail::before,
+    .rail::after {
+      inset: 0 0 auto 0;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: auto;
+      width: auto;
+      height: 1px;
+      background: var(--haze);
+    }
+    .rail-fill {
+      inset: 0 auto auto 0;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      transform-origin: left center;
+      scale: var(--progress, 0) 1;
+    }
+    .rail-nav {
+      flex-direction: row;
+      justify-content: space-between;
+      width: 100%;
+      gap: 0;
+    }
+    .rail-item {
+      flex-direction: column;
+      gap: 0.3rem;
+      padding: 0.45rem 0.6rem;
+    }
+    .rail-foot {
+      display: none;
+    }
+  }
+}

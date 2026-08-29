@@ -1,0 +1,228 @@
+@layer components {
+  /* ==========================================================================
+     Work — three builds. Each one is the same shape: something unreadable goes
+     in, structure comes out, a person gets an answer they can check. The
+     ingest/extract/explain row is that shape made visible, not a decoration.
+     ========================================================================== */
+
+  .build {
+    position: relative;
+    padding-block: clamp(3.5rem, 9vh, 7rem);
+    border-top: var(--hair);
+  }
+  .build:first-of-type {
+    border-top: 0;
+  }
+  .build-inner {
+    grid-column: 1 / span 9;
+    display: grid;
+    grid-template-columns: repeat(9, minmax(0, 1fr));
+    gap: var(--gutter) var(--gutter);
+  }
+
+  .build-meta {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: baseline;
+    gap: var(--s-4);
+  }
+  .build-meta::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--haze);
+    translate: 0 -0.35em;
+  }
+  .build-index {
+    font-family: var(--f-mono);
+    font-variation-settings: 'wdth' 88, 'wght' 600;
+    font-size: var(--t-label);
+    color: var(--xenon);
+    letter-spacing: 0.08em;
+  }
+  .build-context {
+    font-family: var(--f-mono);
+    font-size: var(--t-label);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+
+  .build-title {
+    grid-column: 1 / span 8;
+    /* deliberately below the hero: this is a heading, not the arrival */
+    font-size: clamp(1.9rem, 4.2vw, 3.75rem);
+    --wdth: 96;
+    transition: --wdth 1100ms var(--e-out);
+  }
+  [data-reveal].in .build-title {
+    --wdth: 114;
+  }
+
+  .build-premise {
+    grid-column: 1 / span 5;
+    font-size: var(--t-lead);
+    line-height: 1.4;
+    color: var(--bone);
+    text-wrap: pretty;
+  }
+
+  .build-facts {
+    grid-column: 6 / span 4;
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-3);
+    align-self: start;
+  }
+  .build-fact {
+    display: flex;
+    align-items: baseline;
+    gap: var(--s-3);
+    padding-bottom: var(--s-3);
+    border-bottom: var(--hair);
+  }
+  .build-fact b {
+    font-family: var(--f-display);
+    font-variation-settings: 'wdth' 110, 'wght' 620;
+    font-size: 1.85rem;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    min-width: 4.2ch;
+    color: var(--bone);
+  }
+  .build-fact.is-flare b {
+    color: var(--flare);
+  }
+  .build-fact span {
+    color: var(--dim);
+    font-size: var(--t-small);
+  }
+
+  /* ---- the pipeline ---------------------------------------------------- */
+  .pipeline {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--gutter);
+    margin-top: var(--s-3);
+  }
+  .beat {
+    position: relative;
+    padding-top: var(--s-5);
+    border-top: 1px solid var(--xenon-lo);
+  }
+  .beat::before {
+    content: '';
+    position: absolute;
+    top: -3.5px;
+    left: 0;
+    width: 6px;
+    height: 6px;
+    background: var(--xenon);
+    border-radius: 50%;
+  }
+  .beat:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: -1px;
+    right: calc(var(--gutter) * -1);
+    width: var(--gutter);
+    height: 1px;
+    background: linear-gradient(to right, var(--xenon-lo), var(--haze));
+  }
+  .beat h4 {
+    font-family: var(--f-mono);
+    font-variation-settings: 'wdth' 86, 'wght' 600;
+    font-size: var(--t-label);
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: var(--xenon-soft);
+    margin-bottom: var(--s-3);
+  }
+  .beat p {
+    color: var(--muted);
+    font-size: var(--t-small);
+    line-height: 1.62;
+  }
+
+  /* ---- notes ----------------------------------------------------------- */
+  .note {
+    padding-left: var(--s-4);
+    border-left: var(--hair-up);
+  }
+  .note-hard {
+    grid-column: 1 / span 5;
+    border-left-color: var(--xenon-lo);
+  }
+  .note-mine {
+    grid-column: 6 / span 4;
+  }
+  .note h5 {
+    font-family: var(--f-mono);
+    font-size: var(--t-micro);
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--faint);
+    margin-bottom: var(--s-3);
+  }
+  .note p {
+    color: var(--muted);
+    font-size: var(--t-small);
+    line-height: 1.6;
+  }
+  .note-hard p {
+    color: var(--bone);
+  }
+
+  .chips {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-2);
+    margin-top: var(--s-2);
+  }
+  .chip {
+    font-family: var(--f-mono);
+    font-variation-settings: 'wdth' 80, 'wght' 400;
+    font-size: var(--t-micro);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--dim);
+    padding: 0.45em 0.7em;
+    border: var(--hair);
+    border-radius: var(--r);
+    background: rgb(14 20 32 / 0.5);
+  }
+
+  @media (max-width: 1024px) {
+    .build-inner,
+    .build-title,
+    .build-premise,
+    .build-facts,
+    .note-hard,
+    .note-mine {
+      grid-column: 1 / -1;
+    }
+    .build-inner {
+      grid-template-columns: 1fr;
+    }
+    .pipeline {
+      grid-template-columns: 1fr;
+      gap: var(--s-5);
+    }
+    .beat:not(:last-child)::after {
+      display: none;
+    }
+    .build-facts {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: var(--s-5);
+    }
+    .build-fact {
+      flex-direction: column;
+      gap: 0.2rem;
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+  }
+}

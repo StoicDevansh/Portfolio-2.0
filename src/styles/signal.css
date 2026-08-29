@@ -1,0 +1,187 @@
+@layer components {
+  /* ==========================================================================
+     Signal — arrival. The name decompresses into place on the width axis: it
+     opens narrow and unreadable, then resolves. Same move the whole page makes.
+     ========================================================================== */
+
+  .signal {
+    min-height: 100svh;
+    display: grid;
+    align-content: center;
+    padding-block: calc(var(--rail) + var(--s-7)) var(--s-8);
+  }
+
+  .signal-grid {
+    align-items: center;
+  }
+  /* both live in row 1 on purpose: the copy sits over the portrait, and the
+     portrait's left edge is masked away so the two never fight */
+  .signal-main {
+    grid-column: 1 / span 7;
+    grid-row: 1;
+    position: relative;
+    z-index: 2;
+  }
+  .signal-figure {
+    grid-column: 7 / span 6;
+    grid-row: 1;
+    position: relative;
+    z-index: 1;
+  }
+
+  .signal-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: var(--s-3);
+    margin-bottom: var(--s-5);
+  }
+  .signal-eyebrow::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, var(--haze-up), transparent);
+  }
+
+  .signal-name {
+    display: block;
+    font-size: var(--t-hero);
+    margin-bottom: clamp(1.25rem, 2.4vw, 2.25rem);
+  }
+  .signal-name span {
+    display: block;
+    --wdth: calc(62 + (var(--wd-to) - 62) * var(--k));
+    --wght: calc(480 + 180 * var(--k));
+    /* declared here rather than inherited: font-variation-settings passes down
+       as a resolved value, so the h1's copy would carry the h1's width and both
+       lines would open at the same one */
+    font-variation-settings:
+      'wdth' var(--wdth),
+      'wght' var(--wght);
+    opacity: var(--k);
+  }
+  .signal-name span:nth-child(1) {
+    --wd-to: 100;
+  }
+  /* Five characters against seven. Extended to the face's maximum the surname
+     still measures ~50px short of the given name at this size, so the shortfall
+     is dealt out as tracking. Both quantities scale with the font, so one em
+     value holds the two lines flush at every viewport width. */
+  .signal-name span:nth-child(2) {
+    --wd-to: 125;
+    letter-spacing: 0.087em;
+    color: var(--muted);
+  }
+  html.booted .signal-name span {
+    animation: keyin 1150ms var(--e-out) both;
+  }
+  html.booted .signal-name span:nth-child(2) {
+    animation-delay: 110ms;
+  }
+
+  .signal-thesis {
+    max-width: 34ch;
+    font-size: var(--t-lead);
+    line-height: 1.38;
+    color: var(--muted);
+    text-wrap: pretty;
+  }
+  .signal-thesis b {
+    color: var(--bone);
+    font-weight: 400;
+  }
+
+  /* ---- the one credential --------------------------------------------- */
+  .cred {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--s-4);
+    margin-top: clamp(2rem, 4vw, 3.25rem);
+    padding-left: var(--s-4);
+    border-left: 1px solid var(--flare-lo);
+    max-width: 44ch;
+  }
+  .cred-num {
+    font-size: clamp(2.25rem, 4.2vw, 3.5rem);
+    line-height: 0.82;
+    color: var(--flare);
+  }
+  .cred-body p + p {
+    margin-top: 0.28em;
+  }
+  .cred-event {
+    font-size: var(--t-small);
+    color: var(--bone);
+  }
+
+  /* ---- portrait -------------------------------------------------------- */
+  .signal-figure img {
+    width: 100%;
+    height: auto;
+    mix-blend-mode: screen;
+    filter: contrast(1.04) saturate(0);
+    mask-image:
+      linear-gradient(to bottom, transparent 0%, #000 15%, #000 72%, transparent 100%),
+      linear-gradient(to right, transparent 0%, #000 26%);
+    mask-composite: intersect;
+    -webkit-mask-composite: source-in;
+    translate: calc((var(--pointer-x, 0.5) - 0.5) * -14px) 0;
+    transition: translate 900ms var(--e-soft);
+  }
+
+  /* ---- scroll cue ------------------------------------------------------ */
+  .cue {
+    display: flex;
+    align-items: center;
+    gap: var(--s-3);
+    margin-top: clamp(2rem, 4vw, 3.5rem);
+  }
+  .cue i {
+    display: block;
+    width: 1px;
+    height: 34px;
+    background: linear-gradient(to bottom, var(--xenon), transparent);
+    animation: cuedrop 2.2s var(--e-io) infinite;
+    transform-origin: top;
+  }
+  @keyframes cuedrop {
+    0% { scale: 1 0.2; opacity: 0 }
+    35% { scale: 1 1; opacity: 1 }
+    100% { scale: 1 1; opacity: 0; translate: 0 12px }
+  }
+
+  @media (max-width: 1024px) {
+    .signal-main {
+      grid-column: 1 / -1;
+      grid-row: 2;
+    }
+    .signal-figure {
+      grid-column: 1 / -1;
+      grid-row: 1;
+      max-width: 22rem;
+      margin-inline: auto;
+    }
+    .signal-figure img {
+      mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 74%, transparent);
+    }
+    .signal {
+      padding-block: calc(3.25rem + var(--s-6)) var(--s-7);
+    }
+  }
+
+  /* Where the rail becomes a fixed bottom bar the hero has to fit above it, or
+     the credential — the one piece of proof on the fold — sits behind blurred
+     glass. Cheapest 190px: a smaller portrait, less crown padding, and no cue.
+     The cue earns its place on a mouse; on a touch device the bar already says
+     what the page contains. */
+  @media (max-width: 860px) {
+    .signal {
+      padding-block: 4rem var(--s-7);
+    }
+    .signal-figure {
+      max-width: 16rem;
+    }
+    .cue {
+      display: none;
+    }
+  }
+}

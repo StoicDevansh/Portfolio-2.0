@@ -1,0 +1,136 @@
+@layer components {
+  /* ==========================================================================
+     Stack — a claim with evidence attached. Every shipped tool prints the builds
+     it actually appears in; the tools without a build are listed separately and
+     said so. Hovering a row lights that node and its edges in the lattice, so
+     the 3D object and the list are two views of one dataset.
+     ========================================================================== */
+
+  .stack-lede {
+    grid-column: 1 / span 5;
+    margin-bottom: var(--s-6);
+  }
+
+  .stack-body {
+    grid-column: 1 / span 9;
+  }
+  .tier-head {
+    display: flex;
+    align-items: baseline;
+    gap: var(--s-3);
+    margin-bottom: var(--s-4);
+  }
+  .tier-head span {
+    color: var(--faint);
+  }
+  .tier-head + .tier-head {
+    margin-top: var(--s-8);
+  }
+
+  /* multi-column rather than a two-track grid: reading order stays vertical */
+  .rows {
+    columns: 2;
+    column-gap: var(--gutter);
+  }
+  .row {
+    break-inside: avoid;
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+    gap: var(--s-4);
+    padding-block: 0.62rem;
+    border-bottom: var(--hair);
+  }
+  .row-name {
+    font-size: var(--t-body);
+    color: var(--muted);
+    /* the reading face carries no width axis, so the row's answer to a pointer
+       is weight */
+    --wght: 400;
+    font-variation-settings: 'wght' var(--wght);
+    transition:
+      color var(--d-1) var(--e-soft),
+      --wght var(--d-2) var(--e-out);
+  }
+  .row:hover .row-name,
+  .row:focus-within .row-name {
+    color: var(--bone);
+    --wght: 560;
+  }
+
+  /* three cells, one per build: the meter is a count, not a competence score */
+  .meter {
+    display: flex;
+    gap: 3px;
+  }
+  .meter i {
+    width: 13px;
+    height: 3px;
+    border-radius: 2px;
+    background: var(--haze);
+    transition: background var(--d-2) var(--e-soft);
+  }
+  .meter i.on {
+    background: var(--xenon-lo);
+  }
+  .row:hover .meter i.on,
+  .row:focus-within .meter i.on {
+    background: var(--xenon);
+  }
+
+  .row-tags {
+    display: flex;
+    gap: 0.3rem;
+    min-width: 7.4ch;
+    justify-content: flex-end;
+  }
+  .row-tag {
+    font-family: var(--f-mono);
+    font-variation-settings: 'wdth' 82, 'wght' 500;
+    font-size: var(--t-micro);
+    letter-spacing: 0.06em;
+    color: var(--dim);
+    padding: 0.2em 0.34em;
+    border-radius: 2px;
+    transition:
+      color var(--d-1) var(--e-soft),
+      background var(--d-1) var(--e-soft);
+  }
+  .row-tag:hover,
+  .row-tag:focus-visible {
+    color: var(--xenon-soft);
+    background: var(--xenon-a12);
+  }
+  .row:hover .row-tag,
+  .row:focus-within .row-tag {
+    color: var(--muted);
+  }
+
+  /* ---- foundation tier ------------------------------------------------- */
+  .core {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-2);
+  }
+  .core .chip {
+    color: var(--muted);
+  }
+  .core-note {
+    margin-top: var(--s-4);
+    color: var(--faint);
+    font-size: var(--t-small);
+    max-width: 58ch;
+  }
+
+  @media (max-width: 1180px) {
+    .rows {
+      columns: 1;
+    }
+  }
+  @media (max-width: 1024px) {
+    .stack-lede,
+    .stack-body {
+      grid-column: 1 / -1;
+    }
+  }
+}

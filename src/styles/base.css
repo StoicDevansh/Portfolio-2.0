@@ -1,0 +1,334 @@
+@layer base {
+  /* ---- faces (self-hosted, latin subset, variable) ---- */
+  @font-face {
+    font-family: 'Archivo';
+    src: url('/fonts/archivo-latin.woff2') format('woff2-variations');
+    font-weight: 400 700;
+    font-stretch: 62% 125%;
+    font-display: swap;
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2000-206F, U+2122, U+2192, U+2212;
+  }
+  @font-face {
+    font-family: 'Instrument Sans';
+    src: url('/fonts/instrument-sans-latin.woff2') format('woff2-variations');
+    font-weight: 400 700;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Martian Mono';
+    src: url('/fonts/martian-mono-latin.woff2') format('woff2-variations');
+    font-weight: 300 700;
+    font-stretch: 75% 112.5%;
+    font-display: swap;
+  }
+
+  /* Registered so width can be transitioned rather than snapped. */
+  @property --wdth {
+    syntax: '<number>';
+    inherits: true;
+    initial-value: 100;
+  }
+  @property --wght {
+    syntax: '<number>';
+    inherits: true;
+    initial-value: 400;
+  }
+  /* an integer so it can be printed through a counter without a React render */
+  @property --pct {
+    syntax: '<integer>';
+    inherits: true;
+    initial-value: 0;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    background: var(--void);
+    color: var(--bone);
+    font-family: var(--f-body);
+    font-size: var(--t-body);
+    line-height: 1.55;
+    font-synthesis: none;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  p,
+  figure,
+  blockquote,
+  ul,
+  ol {
+    margin: 0;
+  }
+  ul,
+  ol {
+    padding: 0;
+    list-style: none;
+  }
+
+  img,
+  svg,
+  canvas {
+    display: block;
+    max-width: 100%;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  button {
+    font: inherit;
+    color: inherit;
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+  }
+
+  ::selection {
+    background: var(--xenon-a40);
+    color: #fff;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--xenon);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* ---- type primitives ------------------------------------------------ */
+
+  /* The axis values are real declarations rather than var() fallbacks: --wdth
+     and --wght are registered with initial values, so a fallback can never be
+     reached. Anything that wants a different width sets the property itself —
+     from the components layer, which outranks this one. */
+  .display {
+    font-family: var(--f-display);
+    --wdth: 118;
+    --wght: 640;
+    font-variation-settings:
+      'wdth' var(--wdth),
+      'wght' var(--wght);
+    line-height: 0.86;
+    letter-spacing: -0.028em;
+    text-transform: uppercase;
+    text-wrap: balance;
+  }
+
+  .label {
+    font-family: var(--f-mono);
+    --wdth: 88;
+    --wght: 500;
+    font-variation-settings:
+      'wdth' var(--wdth),
+      'wght' var(--wght);
+    font-size: var(--t-label);
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--dim);
+    line-height: 1.1;
+  }
+
+  .micro {
+    font-family: var(--f-mono);
+    font-variation-settings:
+      'wdth' 82,
+      'wght' 400;
+    font-size: var(--t-micro);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+
+  .lead {
+    font-size: var(--t-lead);
+    line-height: 1.42;
+    color: var(--muted);
+    text-wrap: pretty;
+  }
+
+  .prose {
+    color: var(--muted);
+    max-width: var(--measure);
+    text-wrap: pretty;
+  }
+
+  .num {
+    font-family: var(--f-display);
+    font-variation-settings:
+      'wdth' 112,
+      'wght' 600;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+  }
+
+  /* ---- utility -------------------------------------------------------- */
+
+  .sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  /* copy that only makes sense to a mouse */
+  @media (hover: none), (max-width: 860px) {
+    .only-pointer {
+      display: none;
+    }
+  }
+  .only-touch {
+    display: none;
+  }
+  @media (hover: none), (max-width: 860px) {
+    .only-touch {
+      display: inline;
+    }
+  }
+
+  /* entrance driver: one registered number, so a single animation can move
+     opacity, offset and the width axis together */
+  @property --k {
+    syntax: '<number>';
+    inherits: false;
+    initial-value: 1;
+  }
+  @keyframes keyin {
+    from {
+      --k: 0;
+    }
+    to {
+      --k: 1;
+    }
+  }
+  @keyframes rise {
+    from {
+      opacity: 0;
+      translate: 0 14px;
+    }
+    to {
+      opacity: 1;
+      translate: 0 0;
+    }
+  }
+  html.booted .rise {
+    animation: rise 900ms var(--e-out) both;
+    animation-delay: var(--delay, 0ms);
+  }
+  .rise {
+    animation: rise 1ms both;
+  }
+
+  /* Scroll reveal. Gated on html.booted so that if the script never runs the
+     page is simply static rather than blank. Children stagger off one index. */
+  html.booted [data-reveal] > * {
+    opacity: 0;
+    translate: 0 16px;
+    transition:
+      opacity 760ms var(--e-out),
+      translate 760ms var(--e-out);
+    transition-delay: calc(var(--i, 0) * 65ms);
+  }
+  html.booted [data-reveal].in > * {
+    opacity: 1;
+    translate: 0 0;
+  }
+  [data-reveal] > *:nth-child(2) { --i: 1 }
+  [data-reveal] > *:nth-child(3) { --i: 2 }
+  [data-reveal] > *:nth-child(4) { --i: 3 }
+  [data-reveal] > *:nth-child(5) { --i: 4 }
+  [data-reveal] > *:nth-child(6) { --i: 5 }
+  [data-reveal] > *:nth-child(n + 7) { --i: 6 }
+
+  .skip {
+    position: fixed;
+    top: var(--s-3);
+    left: 50%;
+    translate: -50% -200%;
+    z-index: 90;
+    padding: var(--s-3) var(--s-5);
+    background: var(--panel);
+    border: var(--hair-up);
+    border-radius: var(--r);
+    font-family: var(--f-mono);
+    font-size: var(--t-label);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    transition: translate var(--d-2) var(--e-out);
+  }
+  /* :focus as well as :focus-visible — a skip link that only appears under the
+     heuristic is a skip link that sometimes cannot be seen at all */
+  .skip:focus,
+  .skip:focus-visible {
+    translate: -50% 0;
+  }
+
+  /* film grain — one raster tile, composited once, never repainted */
+  .grain {
+    position: fixed;
+    inset: -50%;
+    z-index: 60;
+    pointer-events: none;
+    background-image: url('/grain.png');
+    background-size: 160px 160px;
+    opacity: 0.4;
+    mix-blend-mode: overlay;
+    will-change: transform;
+    animation: grainshift 6s steps(6) infinite;
+  }
+  @keyframes grainshift {
+    0% { transform: translate(0, 0) }
+    17% { transform: translate(-3px, 2px) }
+    34% { transform: translate(2px, -3px) }
+    51% { transform: translate(-2px, -2px) }
+    68% { transform: translate(3px, 1px) }
+    85% { transform: translate(1px, 3px) }
+    100% { transform: translate(0, 0) }
+  }
+
+  /* a faint vignette keeps the eye in the centre column on wide screens */
+  .vignette {
+    position: fixed;
+    inset: 0;
+    z-index: 55;
+    pointer-events: none;
+    background: radial-gradient(120% 90% at 50% 40%, transparent 42%, rgb(3 5 10 / 0.6) 100%);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    .grain {
+      animation: none;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}

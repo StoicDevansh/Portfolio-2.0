@@ -1,0 +1,104 @@
+/* ==========================================================================
+   Design tokens
+   Palette: long-exposure astrophotography, not "dark mode". The sky in a deep
+   field is blue-black, and the only saturated things in frame are the light
+   sources. Cool (xenon) marks structure and interaction; warm (flare) is
+   reserved for the one credential that matters and appears nowhere else.
+   Type: two wide faces for structure, one narrow face for reading.
+   ========================================================================== */
+
+@layer tokens {
+  :root {
+    /* ---- surface ---- */
+    --void: #070a12;
+    --deep: #090d17;
+    --abyss: #0c111c;
+    --panel: #0e1420;
+    --haze: #18202f;
+    --haze-up: #26314a;
+
+    /* ---- ink ---- */
+    --bone: #e9ebf2;
+    --muted: #a8b0c0;
+    --dim: #7e8899;
+    --faint: #4a5364;
+
+    /* ---- structure / interaction (cool) ---- */
+    --xenon: #6c8aff;
+    --xenon-soft: #9db0ff;
+    --xenon-lo: #22305c;
+    --xenon-a12: rgb(108 138 255 / 0.12);
+    --xenon-a24: rgb(108 138 255 / 0.24);
+    --xenon-a40: rgb(108 138 255 / 0.4);
+
+    /* ---- achievement (warm) — NASA rank only ---- */
+    --flare: #ffb86b;
+    --flare-lo: #3d2a15;
+    --flare-a20: rgb(255 184 107 / 0.2);
+
+    /* ---- type ---- */
+    --f-display: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+    --f-body: 'Instrument Sans', system-ui, -apple-system, sans-serif;
+    --f-mono: 'Martian Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+    --t-hero: clamp(3rem, 12.2vw, 12.5rem);
+    --t-h1: clamp(2.15rem, 6vw, 5.25rem);
+    --t-h2: clamp(1.6rem, 3.3vw, 2.85rem);
+    --t-h3: clamp(1.0625rem, 1.6vw, 1.375rem);
+    --t-lead: clamp(1.0625rem, 1.5vw, 1.4375rem);
+    --t-body: clamp(0.9375rem, 1vw, 1.0625rem);
+    --t-small: 0.8125rem;
+    --t-label: 0.6875rem;
+    --t-micro: 0.5625rem;
+
+    /* ---- space ---- */
+    --s-1: 0.25rem;
+    --s-2: 0.5rem;
+    --s-3: 0.75rem;
+    --s-4: 1rem;
+    --s-5: 1.5rem;
+    --s-6: 2rem;
+    --s-7: 3rem;
+    --s-8: 4rem;
+    --s-9: 6rem;
+    --s-10: 8rem;
+
+    --gutter: clamp(1.125rem, 4vw, 4.5rem);
+    /* fixed rather than fluid: the rail has to fit a 7-character label exactly */
+    --rail: 86px;
+    --section-y: clamp(5.5rem, 13vh, 11rem);
+    --measure: 62ch;
+    --measure-tight: 46ch;
+
+    /* ---- form ---- */
+    --r: 3px;
+    --r-lg: 10px;
+    --hair: 1px solid var(--haze);
+    --hair-up: 1px solid var(--haze-up);
+
+    /* ---- motion ---- */
+    --e-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --e-io: cubic-bezier(0.66, 0, 0.34, 1);
+    --e-soft: cubic-bezier(0.4, 0, 0.2, 1);
+    --d-1: 160ms;
+    --d-2: 320ms;
+    --d-3: 620ms;
+    --d-4: 1100ms;
+
+    /* ---- live values written by the scroll driver ---- */
+    --scroll-velocity: 0;
+    --pointer-x: 0.5;
+    --pointer-y: 0.5;
+  }
+
+  @media (min-width: 1180px) {
+    :root {
+      --rail: 108px;
+    }
+  }
+  @media (max-width: 860px) {
+    :root {
+      --rail: 0px;
+    }
+  }
+}

@@ -1,0 +1,183 @@
+@layer components {
+  /* ==========================================================================
+     Contact — the address is the largest thing in the section because it is the
+     only thing this page is asking for. One click copies it. The lattice resolves
+     into a letterform behind this panel: the corpus finally becomes legible.
+     ========================================================================== */
+
+  .contact {
+    min-height: 88svh;
+    display: grid;
+    align-content: center;
+  }
+
+  .contact-lede {
+    grid-column: 1 / span 7;
+    margin-bottom: var(--s-6);
+  }
+
+  .mailto {
+    grid-column: 1 / span 11;
+    display: block;
+    text-align: left;
+    font-family: var(--f-display);
+    font-variation-settings:
+      'wdth' var(--wdth, 94),
+      'wght' 560;
+    font-size: clamp(1.375rem, 4.6vw, 3.5rem);
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    color: var(--bone);
+    overflow-wrap: anywhere;
+    --wdth: 94;
+    transition:
+      --wdth var(--d-3) var(--e-out),
+      color var(--d-2) var(--e-soft);
+  }
+  .mailto:hover,
+  .mailto:focus-visible {
+    --wdth: 108;
+    color: #fff;
+  }
+  .mailto i {
+    display: inline-block;
+    width: 0.32em;
+    height: 0.32em;
+    margin-left: 0.22em;
+    translate: 0 -0.06em;
+    border-radius: 50%;
+    background: var(--xenon);
+    font-style: normal;
+    transition: scale var(--d-2) var(--e-out);
+  }
+  .mailto:hover i {
+    scale: 1.35;
+  }
+
+  .copy-state {
+    grid-column: 1 / span 11;
+    display: flex;
+    align-items: center;
+    gap: var(--s-4);
+    margin-top: var(--s-4);
+    min-height: 1.4em;
+  }
+  .copy-state em {
+    font-style: normal;
+    color: var(--xenon-soft);
+    opacity: 0;
+    translate: 0 4px;
+    transition:
+      opacity var(--d-2) var(--e-out),
+      translate var(--d-2) var(--e-out);
+  }
+  .copy-state.is-copied em {
+    opacity: 1;
+    translate: 0 0;
+  }
+
+  /* ---- links ----------------------------------------------------------- */
+  .reach {
+    grid-column: 1 / span 8;
+    margin-top: var(--s-8);
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0;
+    border-top: var(--hair);
+  }
+  .reach-item {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--s-4);
+    padding-block: var(--s-4);
+    border-bottom: var(--hair);
+    color: var(--muted);
+    transition:
+      color var(--d-1) var(--e-soft),
+      padding-left var(--d-2) var(--e-out);
+  }
+  .reach-item:nth-child(odd) {
+    padding-right: var(--s-5);
+  }
+  .reach-item:nth-child(even) {
+    padding-left: var(--s-5);
+  }
+  a.reach-item:hover,
+  button.reach-item:hover,
+  .reach-item:focus-visible {
+    color: var(--bone);
+  }
+  .reach-item b {
+    font-weight: 400;
+    font-size: var(--t-body);
+  }
+  .reach-item span {
+    font-family: var(--f-mono);
+    font-variation-settings: 'wdth' 80, 'wght' 400;
+    font-size: var(--t-label);
+    letter-spacing: 0.06em;
+    color: var(--dim);
+    text-align: right;
+  }
+  a.reach-item:hover span {
+    color: var(--xenon-soft);
+  }
+  button.reach-item {
+    width: 100%;
+    text-align: left;
+  }
+
+  .contact-avail {
+    grid-column: 10 / span 3;
+    align-self: start;
+    margin-top: var(--s-8);
+    padding-top: var(--s-4);
+    border-top: 1px solid var(--xenon-lo);
+  }
+  .contact-avail p {
+    font-size: var(--t-small);
+    color: var(--muted);
+  }
+  .contact-avail p + p {
+    margin-top: var(--s-2);
+    color: var(--dim);
+  }
+
+  /* ---- foot ------------------------------------------------------------- */
+  .foot {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--s-4);
+    margin-top: var(--s-9);
+    padding-top: var(--s-4);
+    border-top: var(--hair);
+  }
+  .foot a:hover {
+    color: var(--bone);
+  }
+
+  @media (max-width: 1024px) {
+    .contact-lede,
+    .mailto,
+    .copy-state,
+    .reach,
+    .contact-avail {
+      grid-column: 1 / -1;
+    }
+    .reach {
+      grid-template-columns: 1fr;
+      margin-top: var(--s-7);
+    }
+    .reach-item:nth-child(odd),
+    .reach-item:nth-child(even) {
+      padding-inline: 0;
+    }
+    .contact-avail {
+      margin-top: var(--s-6);
+    }
+  }
+}

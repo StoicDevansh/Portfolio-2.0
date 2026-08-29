@@ -1,0 +1,133 @@
+@layer components {
+  /* ==========================================================================
+     Path — no invented dates and no fake career ladder. Three true things: what
+     he is studying, the one result worth ranking, and what he is open to next.
+     The principles row is the through-line of the builds, stated once.
+     ========================================================================== */
+
+  .path-now {
+    grid-column: 1 / span 5;
+  }
+  .path-side {
+    grid-column: 7 / span 5;
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-5);
+  }
+
+  .path-degree {
+    font-size: var(--t-h3);
+    --wdth: 108;
+    --wght: 620;
+    text-transform: none;
+    letter-spacing: -0.015em;
+    line-height: 1.08;
+    margin-block: var(--s-3) var(--s-4);
+  }
+  .path-school {
+    color: var(--muted);
+  }
+  .path-finish {
+    margin-top: var(--s-2);
+  }
+  .path-note {
+    margin-top: var(--s-5);
+    padding-top: var(--s-5);
+    border-top: var(--hair);
+    color: var(--dim);
+    font-size: var(--t-small);
+    line-height: 1.62;
+    max-width: 46ch;
+  }
+
+  /* the one credential, restated with its exact scope */
+  .honour {
+    position: relative;
+    padding: var(--s-5);
+    border: 1px solid var(--flare-lo);
+    border-radius: var(--r-lg);
+    background:
+      radial-gradient(120% 140% at 0% 0%, var(--flare-a20), transparent 58%),
+      rgb(14 20 32 / 0.6);
+  }
+  .honour-rank {
+    display: flex;
+    align-items: baseline;
+    gap: var(--s-3);
+    margin-bottom: var(--s-4);
+  }
+  .honour-rank b {
+    font-family: var(--f-display);
+    font-variation-settings: 'wdth' 112, 'wght' 640;
+    font-size: clamp(2rem, 3.4vw, 2.75rem);
+    line-height: 0.85;
+    letter-spacing: -0.03em;
+    color: var(--flare);
+  }
+  .honour-rank span {
+    color: var(--muted);
+    font-size: var(--t-small);
+  }
+  .honour h3 {
+    font-size: var(--t-h3);
+    line-height: 1.2;
+    color: var(--bone);
+  }
+  .honour p {
+    margin-top: var(--s-2);
+    color: var(--dim);
+    font-size: var(--t-small);
+  }
+
+  .avail {
+    padding-left: var(--s-4);
+    border-left: 1px solid var(--xenon-lo);
+  }
+  .avail p {
+    color: var(--bone);
+  }
+  .avail p + p {
+    margin-top: var(--s-2);
+    color: var(--dim);
+  }
+
+  /* ---- principles ------------------------------------------------------ */
+  .principles {
+    grid-column: 1 / span 11;
+    margin-top: var(--s-9);
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--gutter);
+  }
+  .principle {
+    padding-top: var(--s-4);
+    border-top: var(--hair-up);
+  }
+  .principle h4 {
+    font-size: var(--t-h3);
+    color: var(--bone);
+    margin-bottom: var(--s-3);
+    letter-spacing: -0.01em;
+  }
+  .principle p {
+    color: var(--muted);
+    font-size: var(--t-small);
+    line-height: 1.62;
+  }
+
+  @media (max-width: 1024px) {
+    .path-now,
+    .path-side,
+    .principles {
+      grid-column: 1 / -1;
+    }
+    .path-side {
+      margin-top: var(--s-7);
+    }
+    .principles {
+      grid-template-columns: 1fr;
+      gap: var(--s-6);
+      margin-top: var(--s-7);
+    }
+  }
+}
